@@ -2,6 +2,8 @@ from typing import Optional
 
 from fastapi import APIRouter, Body, Depends, HTTPException, Response
 from starlette import status
+import openai
+import os
 
 from app.api.dependencies.items import (
     check_item_modification_permissions,
@@ -26,6 +28,8 @@ from app.services.items import check_item_exists, get_slug_for_item
 from app.services.event import send_event
 
 router = APIRouter()
+
+openai.apikey=os.getenv("OPENAI_API_KEY")
 
 
 @router.get("", response_model=ListOfItemsInResponse, name="items:list-items")
@@ -68,6 +72,15 @@ async def create_new_item(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=strings.ITEM_ALREADY_EXISTS,
         )
+    if not item_create.image:
+        response = openai.Image.create(
+            prompt=item_create.title,
+            n=1,
+            size="256x256",
+            response_format="b64_json"
+        )
+        item_create.image=response["data"][0]["b64_json"][:50]
+
     item = await items_repo.create_item(
         slug=slug,
         title=item_create.title,
