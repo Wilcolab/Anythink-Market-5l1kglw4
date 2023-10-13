@@ -35,7 +35,7 @@ cursor.execute('''
         description TEXT,
         body TEXT,
         image TEXT,
-        seller_id INTEGER REFERENCES users(id)          
+        seller_id INTEGER          
         
     )
 ''')
@@ -45,8 +45,8 @@ cursor.execute('''
     CREATE TABLE IF NOT EXISTS comments(
         id SERIAL PRIMARY KEY,
         body TEXT,
-        seller_id INTEGER REFERENCES users(id),
-        item_id INTEGER REFERENCES items(id)
+        seller_id INTEGER,
+        item_id INTEGER 
     )
 ''')
 
