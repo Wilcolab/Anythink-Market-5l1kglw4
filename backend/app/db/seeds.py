@@ -81,9 +81,16 @@ while len(unique_ids) < num_unique_ids:
 fake.unique.clear()
 # Convert the set to a list
 unique_ids_list = list(unique_ids)
+
+unique_item_ids = set()  # Create a set to ensure uniqueness
+while len(unique_item_ids) < num_unique_ids:
+    unique_item_ids.add(fake.unique.random_int(start_range, end_range))
+fake.unique.clear()
+# Convert the set to a list
+unique_item_ids_list = list(unique_ids)
 for _ in range(100):
     random.shuffle(unique_ids_list)
-    id = fake.unique.random_int(111111,999999)
+    id = unique_item_ids_list.pop()
     slug = fake.unique.first_name()
     title = fake.email()
     description = fake.paragraph(nb_sentences=4)
