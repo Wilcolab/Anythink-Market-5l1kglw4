@@ -26,19 +26,17 @@ cursor.execute('''
 ''')
 # postgres://YourUserName:YourPassword@YourHostname:5432/YourDatabaseName
 
-# create products table
+# create items table
 cursor.execute('''
     CREATE TABLE IF NOT EXISTS items(
         id SERIAL PRIMARY KEY,
         slug VARCHAR(255),
         title VARCHAR(255),
         description TEXT,
-        tags TEXT[],
-        seller INTEGER REFERENCES users(id),
-        favorited BOOLEAN,
-        favorites_count INTEGER,
+        body TEXT,
         image TEXT,
-        body TEXT
+        seller_id INTEGER REFERENCES users(id)          
+        
     )
 ''')
 
@@ -47,7 +45,8 @@ cursor.execute('''
     CREATE TABLE IF NOT EXISTS comments(
         id SERIAL PRIMARY KEY,
         body TEXT,
-        seller INTEGER REFERENCES users(id)
+        seller_id INTEGER REFERENCES users(id),
+        item_id INTEGER REFERENCES items(id)
     )
 ''')
 
@@ -67,20 +66,19 @@ for _ in range(100):
     slug = fake.word()
     title = fake.email()
     description = fake.paragraph(nb_sentences=4)
-    tags = fake.words(nb=3)
-    seller = fake.user_name()
-    favourited = random.choice([True, False])
-    favorites_count = round(random.uniform(10, 1000), 2)
-    image = fake.file_path(depth=3)
     body = fake.paragraph(nb_sentences=6)
-    cursor.execute("INSERT INTO items VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", (id, slug, title, description, tags, seller, favourited, favorites_count, image, body))
+    image = fake.file_path(depth=3)
+    seller_id = fake.unique.random_int(111111,999999)      
+    
+    cursor.execute("INSERT INTO items VALUES (%s, %s, %s, %s, %s, %s, %s)", (id, slug, title, description, body, image, seller_id ))
 
 # Generate and insert 100 comments into the 'comments' table
 for _ in range(100):
     id = fake.unique.random_int(111111,999999)
     body = fake.paragraph(nb_sentences=3)
-    seller = fake.user_name()
-    cursor.execute("INSERT INTO comments VALUES (%s, %s, %s)", (id, body, seller))
+    seller_id = fake.unique.random_int(111111,999999)
+    item_id = fake.unique.random_int(111111,999999)
+    cursor.execute("INSERT INTO comments VALUES (%s, %s, %s, %s)", (id, body, seller_id, item_id))
 
 conn.commit()
 conn.close()
