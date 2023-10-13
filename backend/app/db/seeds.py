@@ -100,12 +100,19 @@ while len(unique_ids) < num_unique_ids:
 # fake.unique.clear()
 # Convert the set to a list
 unique_ids_list = list(unique_ids)
+
+unique_item_ids = set()  # Create a set to ensure uniqueness
+while len(unique_item_ids) < num_unique_ids:
+    unique_item_ids.add(fake.unique.random_int(start_range, end_range))
+# fake.unique.clear()
+# Convert the set to a list
+unique_item_ids_list = list(unique_ids)
 for _ in range(100):
     random.shuffle(unique_ids_list)
     id = fake.unique.random_int(111111,999999)
     body = fake.paragraph(nb_sentences=3)
     seller_id = unique_ids_list.pop()
-    item_id = fake.random_int(111111,999999)
+    item_id = unique_item_ids.pop()
     cursor.execute("INSERT INTO comments VALUES (%s, %s, %s, %s)", (id, body, seller_id, item_id))
 
 conn.commit()
