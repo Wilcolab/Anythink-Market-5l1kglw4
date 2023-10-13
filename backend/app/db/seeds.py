@@ -35,7 +35,7 @@ cursor.execute('''
         description TEXT,
         body TEXT,
         image TEXT,
-        seller_id INTEGER          
+        seller_id INTEGER REFERENCES users(id)          
         
     )
 ''')
@@ -45,8 +45,8 @@ cursor.execute('''
     CREATE TABLE IF NOT EXISTS comments(
         id SERIAL PRIMARY KEY,
         body TEXT,
-        seller_id INTEGER,
-        item_id INTEGER 
+        seller_id INTEGER REFERENCES users(id),
+        item_id INTEGER REFERENCES items(id)
     )
 ''')
 
@@ -68,7 +68,7 @@ for _ in range(100):
     description = fake.paragraph(nb_sentences=4)
     body = fake.paragraph(nb_sentences=6)
     image = fake.file_path(depth=3)
-    seller_id = fake.unique.random_int(111111,999999)      
+    seller_id = fake.random_int(111111,999999)      
     
     cursor.execute("INSERT INTO items VALUES (%s, %s, %s, %s, %s, %s, %s)", (id, slug, title, description, body, image, seller_id ))
 
@@ -76,8 +76,8 @@ for _ in range(100):
 for _ in range(100):
     id = fake.unique.random_int(111111,999999)
     body = fake.paragraph(nb_sentences=3)
-    seller_id = fake.unique.random_int(111111,999999)
-    item_id = fake.unique.random_int(111111,999999)
+    seller_id = fake.random_int(111111,999999)
+    item_id = fake.random_int(111111,999999)
     cursor.execute("INSERT INTO comments VALUES (%s, %s, %s, %s)", (id, body, seller_id, item_id))
 
 conn.commit()
