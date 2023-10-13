@@ -66,7 +66,8 @@ unique_ids_list = list(unique_ids)
 
 # Generate and insert 100 users into the 'users' table
 for _ in range(100):
-    id = random.choice(unique_ids_list)
+    random.shuffle(unique_ids_list)
+    id = unique_ids_list.pop()
     username = fake.user_name()
     email = fake.email()
     bio = fake.paragraph(nb_sentences=3)
@@ -87,9 +88,10 @@ for _ in range(100):
 
 # Generate and insert 100 comments into the 'comments' table
 for _ in range(100):
+    random.shuffle(unique_ids_list)
     id = fake.unique.random_int(111111,999999)
     body = fake.paragraph(nb_sentences=3)
-    seller_id = random.choice(unique_ids_list)
+    seller_id = unique_ids_list.pop()
     item_id = fake.random_int(111111,999999)
     cursor.execute("INSERT INTO comments VALUES (%s, %s, %s, %s)", (id, body, seller_id, item_id))
 
