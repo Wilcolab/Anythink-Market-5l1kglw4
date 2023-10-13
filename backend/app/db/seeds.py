@@ -76,13 +76,14 @@ for _ in range(100):
 
 # Generate and insert 100 products into the 'items' table
 for _ in range(100):
+    random.shuffle(unique_ids_list)
     id = fake.unique.random_int(111111,999999)
     slug = fake.word()
     title = fake.email()
     description = fake.paragraph(nb_sentences=4)
     body = fake.paragraph(nb_sentences=6)
     image = fake.file_path(depth=3)
-    seller_id = fake.random_int(111111,999999)      
+    seller_id = unique_ids_list.pop()      
     
     cursor.execute("INSERT INTO items VALUES (%s, %s, %s, %s, %s, %s, %s)", (id, slug, title, description, body, image, seller_id ))
 
