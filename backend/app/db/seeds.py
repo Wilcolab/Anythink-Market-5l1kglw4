@@ -54,7 +54,7 @@ cursor.execute('''
 # Generate and insert 100 users into the 'users' table
 fake = Faker()
 for _ in range(100):
-    id = random.randint(1000, 3999)
+    id = random.randint(1000, 1999)
     username = fake.user_name()
     email = fake.email()
     bio = fake.paragraph(nb_sentences=3)
