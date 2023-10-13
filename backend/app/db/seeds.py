@@ -78,7 +78,7 @@ for _ in range(100):
 unique_ids = set()  # Create a set to ensure uniqueness
 while len(unique_ids) < num_unique_ids:
     unique_ids.add(fake.unique.random_int(start_range, end_range))
-# fake.unique.clear()
+fake.unique.clear()
 # Convert the set to a list
 unique_ids_list = list(unique_ids)
 for _ in range(100):
