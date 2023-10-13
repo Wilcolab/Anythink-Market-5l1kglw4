@@ -54,7 +54,7 @@ cursor.execute('''
 # Generate and insert 100 users into the 'users' table
 fake = Faker()
 for _ in range(100):
-    id = fake.random_int(10000,10200)
+    id = fake.unique.random_int(111111,999999)
     username = fake.user_name()
     email = fake.email()
     bio = fake.paragraph(nb_sentences=3)
@@ -63,7 +63,7 @@ for _ in range(100):
 
 # Generate and insert 100 products into the 'items' table
 for _ in range(100):
-    id = fake.random_int(10300, 10500)
+    id = fake.unique.random_int(111111,999999)
     slug = fake.word()
     title = fake.email()
     description = fake.paragraph(nb_sentences=4)
@@ -77,7 +77,7 @@ for _ in range(100):
 
 # Generate and insert 100 comments into the 'comments' table
 for _ in range(100):
-    id = fake.random_int(10600,10800)
+    id = fake.unique.random_int(111111,999999)
     body = fake.paragraph(nb_sentences=3)
     seller = fake.user_name()
     cursor.execute("INSERT INTO comments VALUES (%s, %s, %s)", (id, body, seller))
