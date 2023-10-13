@@ -17,7 +17,7 @@ cursor = conn.cursor()
 # create user table
 cursor.execute('''
     CREATE TABLE IF NOT EXISTS users (
-        id INTEGER PRIMARY KEY,
+        id SERIAL PRIMARY KEY,
         username VARCHAR(255),
         email VARCHAR(255),
         bio VARCHAR(255),
@@ -29,7 +29,7 @@ cursor.execute('''
 # create products table
 cursor.execute('''
     CREATE TABLE IF NOT EXISTS items(
-        id INTEGER PRIMARY KEY,
+        id SERIAL PRIMARY KEY,
         slug VARCHAR(255),
         title VARCHAR(255),
         description TEXT,
@@ -45,7 +45,7 @@ cursor.execute('''
 # create comments table
 cursor.execute('''
     CREATE TABLE IF NOT EXISTS comments(
-        id INTEGER PRIMARY KEY,
+        id SERIAL PRIMARY KEY,
         body TEXT,
         seller INTEGER REFERENCES users(id)
     )
@@ -61,7 +61,7 @@ for _ in range(100):
     image = fake.file_path(depth=3)
     cursor.execute("INSERT INTO users VALUES (%s, %s, %s, %s, %s)", (id, username, email, bio, image))
 
-# Generate and insert 100 products into the 'products' table
+# Generate and insert 100 products into the 'items' table
 for _ in range(100):
     id = fake.random_int(10300, 10500)
     slug = fake.word()
