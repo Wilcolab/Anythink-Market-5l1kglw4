@@ -50,10 +50,23 @@ cursor.execute('''
     )
 ''')
 
+
 # Generate and insert 100 users into the 'users' table
 fake = Faker()
+start_range = 100
+end_range = 201
+num_unique_ids = 100  # Change this to the number of unique integers you need
+
+unique_ids = set()  # Create a set to ensure uniqueness
+while len(unique_ids) < num_unique_ids:
+    unique_ids.add(fake.unique.random_int(start_range, end_range))
+
+# Convert the set to a list
+unique_ids_list = list(unique_ids)
+
+# Generate and insert 100 users into the 'users' table
 for _ in range(100):
-    id = fake.unique.random_int(111111,999999)
+    id = random.choice(unique_ids_list)
     username = fake.user_name()
     email = fake.email()
     bio = fake.paragraph(nb_sentences=3)
@@ -76,7 +89,7 @@ for _ in range(100):
 for _ in range(100):
     id = fake.unique.random_int(111111,999999)
     body = fake.paragraph(nb_sentences=3)
-    seller_id = fake.random_int(111111,999999)
+    seller_id = random.choice(unique_ids_list)
     item_id = fake.random_int(111111,999999)
     cursor.execute("INSERT INTO comments VALUES (%s, %s, %s, %s)", (id, body, seller_id, item_id))
 
