@@ -84,7 +84,7 @@ unique_ids_list = list(unique_ids)
 for _ in range(100):
     random.shuffle(unique_ids_list)
     id = fake.unique.random_int(111111,999999)
-    slug = fake.word()
+    slug = fake.unique.first_name()
     title = fake.email()
     description = fake.paragraph(nb_sentences=4)
     body = fake.paragraph(nb_sentences=6)
