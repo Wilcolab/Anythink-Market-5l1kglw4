@@ -11,7 +11,7 @@ import random
 # }
 
 # connection to db
-conn = psycopg2.connect(database="anythink-market", user="postgres", host="postgres-python", port="5432")#password="postgres",
+conn = psycopg2.connect(database="anythink-market", user="postgres", host="0.0.0.0", port="5432")#password="postgres",
 cursor = conn.cursor()
 
 # create user table
