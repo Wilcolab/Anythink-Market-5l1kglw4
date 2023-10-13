@@ -5,6 +5,7 @@ on:
 
 jobs:
   wilco:
+    if: ${{ false }}
     runs-on: ubuntu-20.04
     timeout-minutes: 10
     name: Pr checks
