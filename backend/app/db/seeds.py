@@ -75,6 +75,12 @@ for _ in range(100):
     cursor.execute("INSERT INTO users VALUES (%s, %s, %s, %s, %s)", (id, username, email, bio, image))
 
 # Generate and insert 100 products into the 'items' table
+unique_ids = set()  # Create a set to ensure uniqueness
+while len(unique_ids) < num_unique_ids:
+    unique_ids.add(fake.unique.random_int(start_range, end_range))
+
+# Convert the set to a list
+unique_ids_list = list(unique_ids)
 for _ in range(100):
     random.shuffle(unique_ids_list)
     id = fake.unique.random_int(111111,999999)
@@ -88,6 +94,12 @@ for _ in range(100):
     cursor.execute("INSERT INTO items VALUES (%s, %s, %s, %s, %s, %s, %s)", (id, slug, title, description, body, image, seller_id ))
 
 # Generate and insert 100 comments into the 'comments' table
+unique_ids = set()  # Create a set to ensure uniqueness
+while len(unique_ids) < num_unique_ids:
+    unique_ids.add(fake.unique.random_int(start_range, end_range))
+
+# Convert the set to a list
+unique_ids_list = list(unique_ids)
 for _ in range(100):
     random.shuffle(unique_ids_list)
     id = fake.unique.random_int(111111,999999)
