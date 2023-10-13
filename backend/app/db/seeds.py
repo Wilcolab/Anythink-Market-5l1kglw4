@@ -54,8 +54,8 @@ cursor.execute('''
 # Generate and insert 100 users into the 'users' table
 fake = Faker()
 start_range = 100
-end_range = 201
-num_unique_ids = 100  # Change this to the number of unique integers you need
+end_range = 199
+num_unique_ids = 100  
 
 unique_ids = set()  # Create a set to ensure uniqueness
 while len(unique_ids) < num_unique_ids:
