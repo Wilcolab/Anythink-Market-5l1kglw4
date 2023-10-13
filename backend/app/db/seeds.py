@@ -1,5 +1,5 @@
 import psycopg2
-import faker
+from faker import Faker
 import random
 
 # database connection parameters
@@ -52,7 +52,7 @@ cursor.execute('''
 ''')
 
 # Generate and insert 100 users into the 'users' table
-fake = faker.Faker()
+fake = Faker()
 for _ in range(100):
     id = random.randint(1000, 3999)
     username = fake.user_name()
